@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Sparkles } from 'lucide-react';
+import API_BASE_URL from '../config';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -14,7 +15,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/reviews');
+      const res = await axios.get(`${API_BASE_URL}/reviews`);
       setReviews(res.data);
     } catch (err) {
       console.error(err);
@@ -27,7 +28,7 @@ const Reviews = () => {
 
   const submitReview = async () => {
     try {
-      await axios.post('http://localhost:5000/reviews', form);
+      await axios.post(`${API_BASE_URL}/reviews`, form);
       fetchReviews();
       setForm({ college_name: '', rating: '', comment: '' });
       toast.success('Review submitted successfully!', {

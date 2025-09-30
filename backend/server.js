@@ -8,7 +8,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const db = new sqlite3.Database('database.db'); // Use a file-based DB for persistence
+// Use environment variable for database path, defaulting to local file
+const dbPath = process.env.DATABASE_PATH || './database.db';
+const db = new sqlite3.Database(dbPath);
 
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS colleges (
@@ -132,4 +134,7 @@ app.delete('/favorites/:id', (req, res) => {
   });
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});

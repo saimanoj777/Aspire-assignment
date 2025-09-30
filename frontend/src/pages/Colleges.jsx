@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { MapPin, GraduationCap, DollarSign, Heart, Search } from 'lucide-react';
+import API_BASE_URL from '../config';
 
 const Colleges = () => {
   const [colleges, setColleges] = useState([]);
@@ -11,7 +12,7 @@ const Colleges = () => {
   const [filters, setFilters] = useState({ location: '', course: '', minFee: '', maxFee: '', search: '', sort: '' });
 
   useEffect(() => {
-    axios.get('http://localhost:5000/colleges').then((res) => {
+    axios.get(`${API_BASE_URL}/colleges`).then((res) => {
       const locs = [...new Set(res.data.map((c) => c.location))];
       const cours = [...new Set(res.data.map((c) => c.course))];
       setLocations(locs);
@@ -22,7 +23,7 @@ const Colleges = () => {
   const fetchColleges = async () => {
     try {
       const params = new URLSearchParams(filters).toString();
-      const res = await axios.get(`http://localhost:5000/colleges?${params}`);
+      const res = await axios.get(`${API_BASE_URL}/colleges?${params}`);
       setColleges(res.data);
     } catch (err) {
       console.error(err);
@@ -39,7 +40,7 @@ const Colleges = () => {
 
   const addToFavorites = async (id) => {
     try {
-      await axios.post('http://localhost:5000/favorites', { college_id: id });
+      await axios.post(`${API_BASE_URL}/favorites`, { college_id: id });
       toast.success('College added to favorites!', {
         duration: 3000,
         style: {

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Heart, MapPin, GraduationCap, DollarSign, Trash2, Search } from 'lucide-react';
+import API_BASE_URL from '../config';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -14,7 +15,7 @@ const Favorites = () => {
 
   const fetchFavorites = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/favorites');
+      const res = await axios.get(`${API_BASE_URL}/favorites`);
       setFavorites(res.data);
     } catch (err) {
       console.error(err);
@@ -23,7 +24,7 @@ const Favorites = () => {
 
   const removeFavorite = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/favorites/${id}`);
+      await axios.delete(`${API_BASE_URL}/favorites/${id}`);
       fetchFavorites();
       toast.success('College removed from favorites!', {
         duration: 3000,
