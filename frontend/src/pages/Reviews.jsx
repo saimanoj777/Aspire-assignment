@@ -72,7 +72,7 @@ const Reviews = () => {
           />
           
           <div className="flex items-center space-x-4">
-            <label className="text-slate-700 dark:text-slate-300 font-medium">Rating:</label>
+            
             <input
               name="rating"
               placeholder="Rating (1-5)"
