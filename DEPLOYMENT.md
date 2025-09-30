@@ -22,7 +22,7 @@ This guide will help you deploy your React + Node.js application to Render.
 2. **Configure the Backend Service:**
    - **Name:** `aspire-backend` (or your preferred name)
    - **Runtime:** Node
-   - **Build Command:** `cd backend && npm install`
+   - **Build Command:** `cd backend && npm install && npm rebuild sqlite3`
    - **Start Command:** `cd backend && npm start`
    - **Plan:** Free
 
@@ -88,6 +88,21 @@ VITE_API_URL=https://your-backend-service-url.onrender.com
 
 ### 6. Troubleshooting
 
+#### SQLite3 Native Binding Issues
+If you encounter "invalid ELF header" errors with SQLite3:
+
+**Solution 1: Use the updated build command**
+- The build command now includes `npm rebuild sqlite3` to recompile for Linux
+
+**Solution 2: Alternative build commands**
+- Try: `cd backend && npm ci && npm rebuild sqlite3`
+- Or: `cd backend && rm -rf node_modules && npm install`
+
+**Solution 3: Clear build cache**
+- In Render dashboard, go to Settings → Clear Build Cache
+- Then redeploy
+
+#### Other Issues
 - **Build Failures:** Check the build logs in Render dashboard
 - **API Errors:** Ensure VITE_API_URL points to the correct backend URL
 - **Database Issues:** Check if the database file has proper permissions
